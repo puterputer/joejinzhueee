@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <title>ตรวจสอบค่า pH สำหรับสัตว์น้ำ</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 600px;
+      margin: 50px auto;
+      padding: 20px;
+      border: 2px solid #ccc;
+      border-radius: 10px;
+      background-color: #f9f9f9;
+    }
+    h2 {
+      text-align: center;
+      color: #0066cc;
+    }
+    input[type="number"] {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      margin-top: 10px;
+    }
+    button {
+      margin-top: 15px;
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #218838;
+    }
+    #result {
+      margin-top: 20px;
+      padding: 15px;
+      font-size: 18px;
+      font-weight: bold;
+      text-align: center;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+  <h2>ตรวจสอบค่า pH สำหรับสัตว์น้ำ</h2>
+  <label for="phInput">กรอกค่า pH:</label>
+  <input type="number" id="phInput" step="0.1" placeholder="เช่น 7.5">
+  <button onclick="checkPH()">ตรวจสอบ</button>
+  <div id="result"></div>
+  <script>
+    function checkPH() {
+      const ph = parseFloat(document.getElementById('phInput').value);
+      const result = document.getElementById('result');
+      if (isNaN(ph)) {
+        result.style.backgroundColor = "#ffc107";
+        result.innerText = "กรุณากรอกตัวเลขที่ถูกต้อง";
+        return;
+      }
+      let message = "";
+      let bgColor = "";
+      if (ph <= 4.0) {
+        message = "⚠️ ค่า pH ต่ำมาก เป็นจุดอันตราย ทำให้ปลาตายได้";
+        bgColor = "#dc3545";
+      } else if (ph > 4.0 && ph < 6.0) {
+        message = "⚠️ ค่า pH ต่ำ ปลาบางชนิดอาจรอด แต่ผลผลิตต่ำ (เจริญเติบโตช้า, สืบพันธุ์หยุด)";
+        bgColor = "#fd7e14";
+      } else if (ph >= 6.5 && ph <= 9.0) {
+        message = "✅ ค่า pH เหมาะสมต่อการเพาะเลี้ยงสัตว์น้ำ";
+        bgColor = "#28a745";
+      } else if (ph > 9.0 && ph <= 11.0) {
+        message = "⚠️ ค่า pH สูงเกินไป ไม่เหมาะต่อการดำรงชีวิตสัตว์น้ำในระยะยาว";
+        bgColor = "#ffc107";
+      } else if (ph > 11.0) {
+        message = "❌ ค่า pH สูงมาก เป็นพิษต่อปลา";
+        bgColor = "#dc3545";
+      } else {
+        message = "ℹ️ ค่า pH อยู่ในช่วงที่ไม่แน่ชัด อาจไม่เหมาะสม";
+        bgColor = "#6c757d";
+      }
+      result.style.backgroundColor = bgColor;
+      result.innerText = message;
+    }
+  </script>
+</body>
+</html>
